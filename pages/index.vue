@@ -1,9 +1,17 @@
 <script setup lang="ts">
-  /* ref() and computed() are auto-imported */
+  import { useQuery } from "@tanstack/vue-query";
+
   const count = ref(1)
   const double = computed(() => count.value * 2)
 
-  const { data } = useAsyncData('/api/hello', () => $fetch('/api/hello'))
+  const fetcher = async () =>
+    await fetch("https://jsonplaceholder.typicode.com/posts").then((response) =>
+      response.json()
+    );
+
+  const { data, suspense } = useQuery({ queryKey: ["test"], queryFn: fetcher});
+
+  await suspense();
 </script>
 
 <template>
