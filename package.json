@@ -12,6 +12,7 @@
     "nuxt": "^3.3.3"
   },
   "dependencies": {
+    "@nuxtjs/tailwindcss": "^6.6.5",
     "@tanstack/vue-query": "^4.27.0"
   }
 }

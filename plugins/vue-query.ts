@@ -12,8 +12,6 @@ export default defineNuxtPlugin((nuxt) => {
   });
   const options: VueQueryPluginOptions = { queryClient };
 
-  console.log('IN HERE')
-
   nuxt.vueApp.use(VueQueryPlugin, options);
 
   if (process.server) {
