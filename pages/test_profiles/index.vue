@@ -31,7 +31,7 @@ if (process.server) {
       :key="testProfile.id"
       class="flex gap-4"
     >
-      <NuxtLink :to="`/testProfiles/${testProfile.id}`">{{
+      <NuxtLink :to="`/test_profiles/${testProfile.id}`">{{
         testProfile.id
       }}</NuxtLink>
       <div>{{ testProfile.name }}</div>

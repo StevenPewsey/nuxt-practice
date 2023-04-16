@@ -7,7 +7,7 @@ const links = [
     label: "Home (unauthenticated)",
   },
   {
-    to: "/testProfiles",
+    to: "/test_profiles",
     label: "Test profiles (authenticated)",
   },
   {
