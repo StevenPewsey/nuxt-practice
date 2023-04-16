@@ -11,8 +11,8 @@ const links = [
     label: "Test profiles (authenticated)",
   },
   {
-    to: "/test/1",
-    label: "Test (authenticated)",
+    to: "/tests",
+    label: "Tests (authenticated)",
   },
 ]
 
