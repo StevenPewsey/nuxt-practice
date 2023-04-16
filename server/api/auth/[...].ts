@@ -10,6 +10,11 @@ export default NuxtAuthHandler({
       clientId: useRuntimeConfig().auth0.clientId,
       clientSecret: useRuntimeConfig().auth0.clientSecret,
       issuer: useRuntimeConfig().auth0.issuer,
+      authorization: {
+        params: {
+          prompt: "login",
+        },
+      },
     }),
   ],
   callbacks: {

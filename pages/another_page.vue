@@ -8,8 +8,6 @@
 
 <template>
   <div>
-    THIS IS A TEST {{ double }}
-    <button @click="count += 1">Increment</button>
   </div>
   <pre>{{ data }}</pre>
   <NuxtLink to="/test/1234">test</NuxtLink>
