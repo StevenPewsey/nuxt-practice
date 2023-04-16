@@ -13,6 +13,9 @@ export default defineNuxtConfig({
       issuer: "",
       audience: "",
     },
+    public: {
+      adminGraphqlUrl: "",
+    },
   },
   devServer: {
     port: 8080,

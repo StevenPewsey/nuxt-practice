@@ -8,13 +8,17 @@ export function useGraphQL<TResult, TVariables>(
 ): UseQueryReturnType<TResult, unknown> {
   const { data } = useAuth()
 
+  const {
+    public: { adminGraphqlUrl },
+  } = useRuntimeConfig()
+
   const accessToken = data.value?.accessToken
 
   return useQuery(
     [(document.definitions[0] as any).name.value, variables],
     ({ queryKey }) =>
       request(
-        "http://localhost:4000",
+        adminGraphqlUrl,
         document,
         queryKey[1] ? queryKey[1] : undefined,
         {
