@@ -11,6 +11,9 @@ const config: CodegenConfig = {
       plugins: [],
     },
   },
+  hooks: {
+    afterOneFileWrite: ["eslint --fix"],
+  },
 }
 
 export default config
