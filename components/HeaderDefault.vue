@@ -7,8 +7,8 @@ const links = [
     label: "Home (unauthenticated)",
   },
   {
-    to: "/another_page",
-    label: "Another page (authenticated)",
+    to: "/testProfiles",
+    label: "Test profiles (authenticated)",
   },
   {
     to: "/test/1",
