@@ -29,7 +29,9 @@ const { data, suspense, isLoading } = useGraphQL(getTestProfileQuery, {
 
 const testProfile = computed(() => data.value?.testProfile)
 
-await suspense()
+if (process.server) {
+  await suspense()
+}
 </script>
 
 <template>
