@@ -8,10 +8,9 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     auth0: {
-      clientId: "BAiZlqtIIbTgPSwFmmXiSOazY2XGSTtO",
-      clientSecret:
-        "1cZlp3_4vmtipN-v_wsMCm4uxPBGbdmy14HSkIfsAYUNSSKHaH5XUvXFWzHJipoZ",
-      issuer: "https://steve-pewsey.eu.auth0.com",
+      clientId: "",
+      clientSecret: "",
+      issuer: "",
     },
   },
   devServer: {
