@@ -12,16 +12,21 @@ export default NuxtAuthHandler({
       authorization: {
         params: {
           prompt: "login",
+          audience: useRuntimeConfig().auth0.audience,
+          scope:
+            "openid profile email analysis_job:read escalation:create escalation:read fulfillment_order:read kit:create kit:read lab_file:delete lab_file:force_match lab:read order:create order:read subject:read result_set:read test_profile:read",
         },
       },
     }),
   ],
   callbacks: {
-    session({ session, token }) {
+    // eslint-disable-next-line require-await
+    async session({ session, token }) {
       session.accessToken = token.accessToken
       return session
     },
-    jwt({ token, account }) {
+    // eslint-disable-next-line require-await
+    async jwt({ token, account }) {
       if (account?.access_token) {
         token.accessToken = account.access_token
       }

@@ -11,6 +11,7 @@ export default defineNuxtConfig({
       clientId: "",
       clientSecret: "",
       issuer: "",
+      audience: "",
     },
   },
   devServer: {

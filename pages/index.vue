@@ -23,5 +23,9 @@ const welcomeText = computed(() => {
 </script>
 
 <template>
-  <h1 class="text-3xl">Welcome {{ welcomeText }}</h1>
+  <div>
+    <h1 class="text-3xl">Welcome {{ welcomeText }}</h1>
+
+    <div v-if="authData?.accessToken">{{ authData.accessToken }}</div>
+  </div>
 </template>
