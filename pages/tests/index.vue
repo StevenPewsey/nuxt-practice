@@ -15,7 +15,7 @@ const getTestsQuery = graphql(`
   }
 `)
 
-const { data, suspense } = useGraphQL(getTestsQuery, { page: 1 })
+const { data, suspense, isLoading } = useGraphQL(getTestsQuery, { page: 1 })
 
 const tests = computed(() => data.value?.tests.data ?? [])
 
@@ -26,6 +26,7 @@ if (process.server) {
 
 <template>
   <div>
+    <div v-if="isLoading">Loading...</div>
     <div v-for="test in tests" :key="test.id" class="flex gap-4">
       <NuxtLink :to="`/tests/${test.id}`">{{ test.id }}</NuxtLink>
       <div>{{ test.status }}</div>

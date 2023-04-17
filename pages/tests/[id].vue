@@ -28,7 +28,7 @@ const getTestQuery = graphql(`
   }
 `)
 
-const { data, suspense } = useGraphQL(getTestQuery, {
+const { data, suspense, isLoading } = useGraphQL(getTestQuery, {
   testId: id,
 })
 
@@ -39,6 +39,9 @@ if (process.server) {
 
 <template>
   <div>
-    <pre>{{ data }}</pre>
+    <div v-if="isLoading">Loading...</div>
+    <div>
+      <pre>{{ data }}</pre>
+    </div>
   </div>
 </template>
