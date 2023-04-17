@@ -1,12 +1,14 @@
-import { request } from "graphql-request"
+import { ClientError, request } from "graphql-request"
 import { type TypedDocumentNode } from "@graphql-typed-document-node/core"
 import { useQuery, type UseQueryReturnType } from "@tanstack/vue-query"
+import { callWithNuxt } from "nuxt/app"
 
 export function useGraphQL<TResult, TVariables>(
   document: TypedDocumentNode<TResult, TVariables>,
   ...[variables]: TVariables extends Record<string, never> ? [] : [TVariables]
 ): UseQueryReturnType<TResult, unknown> {
-  const { data } = useAuth()
+  const nuxtApp = useNuxtApp()
+  const { data, signIn } = useAuth()
 
   const {
     public: { adminGraphqlUrl },
@@ -16,14 +18,28 @@ export function useGraphQL<TResult, TVariables>(
 
   return useQuery(
     [(document.definitions[0] as any).name.value, variables],
-    ({ queryKey }) =>
-      request(
-        adminGraphqlUrl,
-        document,
-        queryKey[1] ? queryKey[1] : undefined,
-        {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      ),
+    async ({ queryKey }) => {
+      try {
+        return await request(
+          adminGraphqlUrl,
+          document,
+          queryKey[1] ? queryKey[1] : undefined,
+          {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        )
+      } catch (error) {
+        if (error instanceof ClientError) {
+          const isUnauthenticated = error.response.errors?.some(
+            (error) => error.extensions.code === "UNAUTHENTICATED",
+          )
+          if (isUnauthenticated) {
+            // TODO: try using callWithNuxt elsewhere (e.g in middleware/plugin)
+            await callWithNuxt(nuxtApp, signIn)
+          }
+        }
+        throw error
+      }
+    },
   )
 }
