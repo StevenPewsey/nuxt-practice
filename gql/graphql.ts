@@ -82,14 +82,21 @@ export type AnalysisJobMutation = {
 export type Biomarker = {
   __typename?: 'Biomarker';
   code: Scalars['String'];
+  code_aliases: Array<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
   name: Scalars['String'];
   result_type: Scalars['String'];
+  sex_specific: Scalars['String'];
+  speciality?: Maybe<Scalars['String']>;
+  units?: Maybe<Scalars['String']>;
 };
 
 export type BiomarkerResult = {
   __typename?: 'BiomarkerResult';
   abnormal_flag?: Maybe<Scalars['String']>;
   code: Scalars['String'];
+  escalation_level: Scalars['String'];
   failure_reason?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   reference_ranges: Array<ReferenceRange>;
@@ -121,14 +128,22 @@ export type BulkOrdersFilter = {
 };
 
 export enum CollectionMethods {
+  Container = 'container',
   FingerPrick = 'finger_prick',
+  Swab = 'swab',
   Venous = 'venous'
 }
 
 export enum CollectionTubeVariant {
   Edta = 'edta',
-  FlourideOxalate = 'flouride_oxalate',
-  SerumSeparator = 'serum_separator'
+  FluorideOxalate = 'fluoride_oxalate',
+  GenitalSwab = 'genital_swab',
+  OralSwab = 'oral_swab',
+  RectalSwab = 'rectal_swab',
+  SerumClotActivator = 'serum_clot_activator',
+  SerumSeparator = 'serum_separator',
+  UrineTube = 'urine_tube',
+  UrineTubeWithoutMedium = 'urine_tube_without_medium'
 }
 
 export type Component = {
@@ -468,7 +483,7 @@ export type PaginatedAnalysisJobsResponse = {
 
 export type PaginatedBiomarkersResponse = {
   __typename?: 'PaginatedBiomarkersResponse';
-  data: Array<Biomarker>;
+  data: Array<Maybe<Biomarker>>;
   pagination?: Maybe<PaginationMeta>;
 };
 
@@ -567,6 +582,7 @@ export type Query = {
   _empty?: Maybe<Scalars['String']>;
   analysisJob?: Maybe<AnalysisJob>;
   analysisJobs: PaginatedAnalysisJobsResponse;
+  biomarker: Biomarker;
   biomarkers: PaginatedBiomarkersResponse;
   bulkOrder?: Maybe<BulkOrder>;
   bulkOrders: PaginatedBulkOrdersResponse;
@@ -601,6 +617,11 @@ export type QueryAnalysisJobArgs = {
 export type QueryAnalysisJobsArgs = {
   page?: InputMaybe<Scalars['Int']>;
   pageSize?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryBiomarkerArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -755,7 +776,11 @@ export type SampleCollectionInput = {
 
 export enum SampleTypes {
   Blood = 'blood',
-  Saliva = 'saliva'
+  Genital = 'genital',
+  Oral = 'oral',
+  Rectal = 'rectal',
+  Saliva = 'saliva',
+  Urine = 'urine'
 }
 
 export type Subject = {
