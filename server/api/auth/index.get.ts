@@ -5,7 +5,13 @@ export default eventHandler((event) => {
     auth0: { audience, clientId, issuer },
   } = useRuntimeConfig()
 
-  const redirectUri = `${getRequestURL(event).href}/callback`
+  const { redirectPath } = getQuery(event)
+
+  const redirectUrl = new URL("api/auth/callback", getRequestURL(event).origin)
+
+  if (redirectPath) {
+    redirectUrl.searchParams.append("redirectPath", redirectPath.toString())
+  }
 
   const state = nanoid()
   setCookie(event, "auth-state", state, { httpOnly: true })
@@ -18,7 +24,7 @@ export default eventHandler((event) => {
   authorizationUrl.searchParams.append("scope", scope)
   authorizationUrl.searchParams.append("response_type", "code")
   authorizationUrl.searchParams.append("client_id", clientId)
-  authorizationUrl.searchParams.append("redirect_uri", redirectUri)
+  authorizationUrl.searchParams.append("redirect_uri", redirectUrl.toString())
   authorizationUrl.searchParams.append("state", state)
 
   return sendRedirect(event, authorizationUrl.toString())

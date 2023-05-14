@@ -23,8 +23,14 @@ async function fetch() {
   )
 }
 
-function signIn() {
-  return navigateTo("/api/auth", { external: true })
+function signIn(options: { redirectPath?: string } = {}) {
+  const url = options.redirectPath
+    ? `/api/auth?redirectPath=${options.redirectPath}`
+    : "/api/auth"
+
+  return navigateTo(url, {
+    external: true,
+  })
 }
 
 function signOut() {

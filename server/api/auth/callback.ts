@@ -14,7 +14,7 @@ export default eventHandler(async (event) => {
   const {
     auth0: { clientId, clientSecret, issuer },
   } = useRuntimeConfig()
-  const { code, state } = getQuery(event)
+  const { code, state, redirectPath } = getQuery(event)
 
   const stateCookieValue = getCookie(event, "auth-state")
 
@@ -48,5 +48,5 @@ export default eventHandler(async (event) => {
     user: decodedUser,
   })
 
-  return sendRedirect(event, "/")
+  return sendRedirect(event, redirectPath?.toString() || "/")
 })
