@@ -1,11 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ["@nuxtjs/tailwindcss", "@sidebase/nuxt-auth"],
-  auth: {
-    enableGlobalAppMiddleware: true,
-    defaultProvider: "auth0",
-    origin: "http://localhost:8080",
-  },
+  modules: ["@nuxtjs/tailwindcss"],
   runtimeConfig: {
     auth0: {
       clientId: "",
@@ -15,6 +10,10 @@ export default defineNuxtConfig({
     },
     public: {
       adminGraphqlUrl: "",
+    },
+    session: {
+      name: "nuxt-session",
+      password: "",
     },
   },
   devServer: {

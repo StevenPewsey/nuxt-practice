@@ -1,10 +1,10 @@
 <script setup lang="ts">
 definePageMeta({ auth: false })
 
-const { data: authData } = useAuth()
+const { user } = useUserSession()
 
 const welcomeText = computed(() => {
-  return authData.value?.user?.name ?? "unauthenticated user"
+  return user.value?.nickname ?? "unauthenticated user"
 })
 </script>
 

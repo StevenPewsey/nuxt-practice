@@ -8,13 +8,11 @@ export function useGraphQL<TResult, TVariables>(
   ...[variables]: TVariables extends Record<string, never> ? [] : [TVariables]
 ): UseQueryReturnType<TResult, unknown> {
   const nuxtApp = useNuxtApp()
-  const { data, signIn } = useAuth()
+  const { accessToken, signIn } = useUserSession()
 
   const {
     public: { adminGraphqlUrl },
   } = useRuntimeConfig()
-
-  const accessToken = data.value?.accessToken
 
   return useQuery(
     [(document.definitions[0] as any).name.value, variables],
@@ -25,7 +23,7 @@ export function useGraphQL<TResult, TVariables>(
           document,
           queryKey[1] ? queryKey[1] : undefined,
           {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken.value}`,
           },
         )
       } catch (error) {

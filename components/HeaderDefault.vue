@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { status, signIn, signOut, data } = useAuth()
+const { status, signIn, signOut, user } = useUserSession()
 
 const links = [
   {
@@ -16,7 +16,7 @@ const links = [
   },
 ]
 
-const userPhoto = computed(() => data.value?.user?.image)
+const userPhoto = computed(() => user.value?.picture)
 </script>
 
 <template>
@@ -34,10 +34,7 @@ const userPhoto = computed(() => data.value?.user?.image)
       <button v-if="status === 'unauthenticated'" @click="signIn()">
         Sign in
       </button>
-      <button
-        v-else-if="status === 'authenticated'"
-        @click="signOut({ callbackUrl: '/' })"
-      >
+      <button v-else-if="status === 'authenticated'" @click="signOut()">
         Sign out
       </button>
       <button v-else>{{ status }}</button>
