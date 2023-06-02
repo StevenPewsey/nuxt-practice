@@ -15,13 +15,9 @@ const getTestsQuery = graphql(`
   }
 `)
 
-const { data, suspense, isLoading } = useGraphQL(getTestsQuery, { page: 1 })
+const { data, isLoading } = useGraphQL(getTestsQuery, { page: 1 })
 
 const tests = computed(() => data.value?.tests.data ?? [])
-
-if (process.server) {
-  await suspense()
-}
 </script>
 
 <template>

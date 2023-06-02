@@ -28,13 +28,9 @@ const getTestQuery = graphql(`
   }
 `)
 
-const { data, suspense, isLoading } = useGraphQL(getTestQuery, {
+const { data, isLoading } = useGraphQL(getTestQuery, {
   testId: id,
 })
-
-if (process.server) {
-  await suspense()
-}
 </script>
 
 <template>

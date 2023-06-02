@@ -14,7 +14,7 @@ export function useGraphQL<TResult, TVariables>(
     public: { adminGraphqlUrl },
   } = useRuntimeConfig()
 
-  return useQuery(
+  const useQueryResponse = useQuery(
     [(document.definitions[0] as any).name.value, variables],
     async ({ queryKey }) => {
       try {
@@ -40,4 +40,12 @@ export function useGraphQL<TResult, TVariables>(
       }
     },
   )
+
+  onServerPrefetch(async () => {
+    await useQueryResponse.suspense()
+  })
+
+  return {
+    ...useQueryResponse,
+  }
 }

@@ -70,6 +70,7 @@ export type AnalysisJob = {
   sample_taken_at?: Maybe<Scalars['String']>;
   status: Scalars['String'];
   subject?: Maybe<Subject>;
+  test: Test;
   test_profiles: Array<TestProfile>;
   updated_at?: Maybe<Scalars['String']>;
 };
@@ -112,11 +113,11 @@ export type BulkOrder = {
   created_at: Scalars['String'];
   id: Scalars['ID'];
   organization_key: Scalars['String'];
-  requested_lab: Scalars['String'];
+  requested_lab?: Maybe<Scalars['String']>;
   requested_test_profiles: Array<Scalars['String']>;
-  sku: Scalars['String'];
+  sku?: Maybe<Scalars['String']>;
   status: Scalars['String'];
-  test_count: Scalars['Int'];
+  test_count?: Maybe<Scalars['Int']>;
   test_ids?: Maybe<Array<Maybe<Scalars['String']>>>;
   test_sample_references?: Maybe<Array<Maybe<Scalars['String']>>>;
   tests?: Maybe<Array<Maybe<Test>>>;
@@ -265,6 +266,11 @@ export type Hl7File = {
   sample_reference?: Maybe<Scalars['String']>;
   sample_taken_at?: Maybe<Scalars['String']>;
   sex?: Maybe<Scalars['String']>;
+};
+
+export type IdOnlyNode = {
+  __typename?: 'IDOnlyNode';
+  id: Scalars['String'];
 };
 
 export type JsonApiError = {
@@ -483,7 +489,7 @@ export type PaginatedAnalysisJobsResponse = {
 
 export type PaginatedBiomarkersResponse = {
   __typename?: 'PaginatedBiomarkersResponse';
-  data: Array<Maybe<Biomarker>>;
+  data: Array<Biomarker>;
   pagination?: Maybe<PaginationMeta>;
 };
 
@@ -549,12 +555,12 @@ export type PaginatedTestsResponse = {
 
 export type PaginationMeta = {
   __typename?: 'PaginationMeta';
-  current?: Maybe<Scalars['Int']>;
+  current: Scalars['Int'];
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
   next?: Maybe<Scalars['Int']>;
   prev?: Maybe<Scalars['Int']>;
-  records?: Maybe<Scalars['Int']>;
+  records: Scalars['Int'];
 };
 
 export type ProcessingLog = {
@@ -566,6 +572,8 @@ export type ProcessingLog = {
   error_details?: Maybe<Scalars['JSON']>;
   file_archive_location?: Maybe<Scalars['String']>;
   file_uri?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  lab?: Maybe<IdOnlyNode>;
   processed_successfully?: Maybe<Scalars['Boolean']>;
   result_type?: Maybe<Scalars['String']>;
   sample_reference?: Maybe<Scalars['String']>;
@@ -582,6 +590,7 @@ export type Query = {
   _empty?: Maybe<Scalars['String']>;
   analysisJob?: Maybe<AnalysisJob>;
   analysisJobs: PaginatedAnalysisJobsResponse;
+  archiveFile: Hl7File;
   biomarker: Biomarker;
   biomarkers: PaginatedBiomarkersResponse;
   bulkOrder?: Maybe<BulkOrder>;
@@ -617,6 +626,12 @@ export type QueryAnalysisJobArgs = {
 export type QueryAnalysisJobsArgs = {
   page?: InputMaybe<Scalars['Int']>;
   pageSize?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryArchiveFileArgs = {
+  filename: Scalars['String'];
+  labCode: Scalars['String'];
 };
 
 
@@ -820,6 +835,8 @@ export type Test = {
   failure_cause?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   inbound_tracking_code?: Maybe<Scalars['String']>;
+  last_analysis_status?: Maybe<Scalars['String']>;
+  last_analysis_status_updated_at?: Maybe<Scalars['String']>;
   order?: Maybe<Order>;
   order_key?: Maybe<Scalars['String']>;
   organization_key: Scalars['String'];
@@ -857,6 +874,7 @@ export type TestProfile = {
 };
 
 export type TestsFilter = {
+  analysisStatuses?: InputMaybe<Array<Scalars['String']>>;
   collectionMethods?: InputMaybe<Array<CollectionMethods>>;
   search?: InputMaybe<Array<Scalars['String']>>;
   statuses?: InputMaybe<Array<Scalars['String']>>;
